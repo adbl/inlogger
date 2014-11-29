@@ -6,6 +6,6 @@ image:
 	docker build --rm -t $(image) .
 
 clean:
-	-rm static/bundle.js
-	-rm static/bundle.min.js
+	-rm inlogger/static/bundle.js
+	-rm inlogger/static/bundle.min.js
 	-rm -r node_modules

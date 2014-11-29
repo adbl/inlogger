@@ -13,6 +13,6 @@ WORKDIR /opt/inlogger
 RUN npm install
 RUN npm run build
 # TODO should use gulp or something
-RUN ln -s bundle.min.js static/bundle.js
+RUN ln -s bundle.min.js inlogger/static/bundle.js
 VOLUME ["/opt/inlogger"]
-ENTRYPOINT ["python", "inlogger.py"]
+ENTRYPOINT ["python", "server.py"]

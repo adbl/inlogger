@@ -17,8 +17,8 @@
     "watchify": "^2.1.1"
   },
   "scripts": {
-    "start": "watchify -o static/bundle.js -v -d .",
-    "build": "NODE_ENV=production browserify . | uglifyjs -cm > static/bundle.min.js"
+    "start": "watchify -o inlogger/static/bundle.js -v -d .",
+    "build": "NODE_ENV=production browserify . | uglifyjs -cm > inlogger/static/bundle.min.js"
   },
   "browserify": {
     "transform": [
