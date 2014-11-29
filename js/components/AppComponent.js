@@ -1,10 +1,10 @@
 var React = require('react');
-
 var bs = require('react-bootstrap');
 var PageHeader = bs.PageHeader;
 var Grid = bs.Grid;
 var Col = bs.Col;
 
+var AppStore = require('../stores/AppStore');
 var LoginForm = require('./LoginForm');
 
 var AppComponent = React.createClass({
@@ -15,14 +15,23 @@ var AppComponent = React.createClass({
         }
     },
 
-    handleLogin: function(username, password) {
-        // TODO send some event...
+    componentDidMount: function() {
+        AppStore.addChangeListener(this._onChange);
+    },
+
+    componentWillUnmount: function() {
+        AppStore.removeChangeListener(this._onChange);
+    },
+
+    _onChange: function() {
+        console.debug("AppComponent._onChange");
+        // TODO setState user...
     },
 
     render: function() {
         var content = null;
         if (!this.state.user) {
-            content = <LoginForm onSubmit={this.handleLogin}/>;
+            content = <LoginForm/>;
         }
         return (
             <Grid>
