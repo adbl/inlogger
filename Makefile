@@ -1,9 +1,14 @@
 image := inlogger
 
-.PHONY: image clean
+.PHONY: image clean db
 
-image:
+image: db
 	docker build --rm -t $(image) .
+
+db: db/inlogger.sqlite3
+
+db/inlogger.sqlite3: db/schema.sql
+	sqlite3 $@ < db/schema.sql
 
 clean:
 	-rm inlogger/static/bundle.js

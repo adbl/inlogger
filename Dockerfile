@@ -15,4 +15,5 @@ RUN npm run build
 # TODO should use gulp or something
 RUN ln -s bundle.min.js inlogger/static/bundle.js
 VOLUME ["/opt/inlogger"]
+VOLUME ["/mnt/db"]
 ENTRYPOINT ["python", "server.py"]
