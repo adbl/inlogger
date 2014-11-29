@@ -1,0 +1,24 @@
+{
+  "main": "js/app.js",
+  "dependencies": {
+    "react": "^0.12.1",
+    "react-tools": "^0.12.1"
+  },
+  "devDependencies": {
+    "browserify": "^6.3.3",
+    "envify": "^3.2.0",
+    "reactify": "^0.17.1",
+    "uglify-js": "^2.4.15",
+    "watchify": "^2.1.1"
+  },
+  "scripts": {
+    "start": "watchify -o static/bundle.js -v -d .",
+    "build": "NODE_ENV=production browserify . | uglifyjs -cm > static/bundle.min.js"
+  },
+  "browserify": {
+    "transform": [
+      "reactify",
+      "envify"
+    ]
+  }
+}
