@@ -41,8 +41,8 @@ def index():
 @app.route('/api/login', methods=['POST'])
 @auth.login_required
 def login():
-    # TODO implementation
-    return "yey"
+    user.login(g.db, auth.username())
+    return respond("", 200)
 
 
 @app.route('/api/signup', methods=['POST'])

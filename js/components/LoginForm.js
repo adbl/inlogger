@@ -28,6 +28,7 @@ var LoginForm = React.createClass({
     },
 
     _onChange: function() {
+        // FIXME called after login before componentWillUnmount have been called
         this.setState({
             waiting: false,
             error: AppStore.getLoginError()

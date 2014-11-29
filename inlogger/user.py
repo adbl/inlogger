@@ -12,3 +12,10 @@ def signup(db, username, password):
     c.execute('INSERT INTO users VALUES (?,?)', [username, password])
     db.commit()
     return True, None
+
+
+def login(db, username):
+    c = db.cursor()
+    c.execute('INSERT INTO logins (user_id) VALUES (?)', [username])
+    db.commit()
+    return True
