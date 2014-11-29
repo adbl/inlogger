@@ -15,8 +15,9 @@ var SignupForm = React.createClass({
         return {
             username: "",
             password: "",
-            error: null,
-            waiting: false
+            waiting: false,
+            success: null,
+            error: null
         }
     },
 
@@ -29,10 +30,21 @@ var SignupForm = React.createClass({
     },
 
     _onChange: function() {
-        this.setState({
-            waiting: false,
-            error: AppStore.getSignupError()
-        });
+        signupSuccess = AppStore.getSignupSuccess();
+        if (signupSuccess) {
+            this.setState(_.extend(this.getInitialState(), {
+                success: signupSuccess
+            }));
+        }
+        else {
+            signupError = AppStore.getSignupError();
+            password = signupError ? "" : this.state.password;
+            this.setState({
+                waiting: false,
+                error: signupError,
+                password: password
+            });
+        }
     },
 
     _handleSubmit: function(event) {
@@ -46,8 +58,9 @@ var SignupForm = React.createClass({
         this.setState({
             username: username,
             password: password,
-            // clear error when changing the form
-            error: null
+            // clear error/success when changing the form
+            error: null,
+            success: null,
         });
     },
 
@@ -72,9 +85,16 @@ var SignupForm = React.createClass({
     },
 
     render: function() {
-        var error = null;
-        if (this.state.error) {
-            error = (
+        var message = null;
+        if (this.state.success) {
+            message = (
+              <Alert className="h4" bsStyle="success">
+                  <strong>Success!</strong> Signed up as <strong>{this.state.success}</strong>
+              </Alert>
+            );
+        }
+        else if (this.state.error) {
+            message = (
               <Alert className="h4" bsStyle="danger">
                   <strong>Sorry!</strong> {this.state.error}
               </Alert>
@@ -101,7 +121,6 @@ var SignupForm = React.createClass({
               value={this.state.password}
               placeholder="Choose a password"
               label="Password"
-              bsStyle={this._validationState()}
               hasFeedback
               groupClassName="group-class"
               labelClassName="col-xs-2"
@@ -117,7 +136,7 @@ var SignupForm = React.createClass({
               bsStyle="primary"
               bsSize="large" />
 
-            {error}
+            {message}
           </form>
         )
     }

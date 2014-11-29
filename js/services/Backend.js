@@ -20,8 +20,7 @@ var Backend = {
             username: username,
             password: password
         }), function(data, textStatus, jqXHR) {
-            debugger
-            console.debug("server success");
+            ServerActions.signupSuccess(username);
         }, function(jqXHR, textStatus, textError) {
             ServerActions.signupError(
                 textStatus == "error" ? jqXHR.responseText : "unknown error");
