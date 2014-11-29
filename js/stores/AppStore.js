@@ -8,15 +8,24 @@ var CHANGE_EVENT = 'change';
 
 var user = null;
 var loginError = null;
+var signupError = null;
 
 function _setLoginError(error) {
     loginError = error;
+}
+
+function _setSignupError(error) {
+    signupError = error;
 }
 
 var AppStore = assign({}, EventEmitter.prototype, {
 
     getLoginError: function() {
         return loginError;
+    },
+
+    getSignupError: function() {
+        return signupError;
     },
 
     emitChange: function() {
@@ -40,6 +49,12 @@ AppDispatcher.register(function(payload) {
         break;
     case Constants.USER_LOGIN_ERROR:
         _setLoginError(action.error);
+        break;
+    case Constants.USER_SIGNUP:
+        _setSignupError(null);
+        break;
+    case Constants.USER_SIGNUP_ERROR:
+        _setSignupError(action.error);
         break;
     default:
         return true;

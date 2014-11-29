@@ -3,6 +3,13 @@ var Constants = require('../constants/Constants');
 
 var ServerActions = {
 
+    signupError: function(error) {
+        AppDispatcher.handleServerAction({
+            actionType: Constants.USER_SIGNUP_ERROR,
+            error: error
+        })
+    },
+
     loginError: function(error) {
         AppDispatcher.handleServerAction({
             actionType: Constants.USER_LOGIN_ERROR,

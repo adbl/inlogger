@@ -9,7 +9,7 @@ var Col = bs.Col;
 var AppStore = require('../stores/AppStore');
 var Actions = require('../actions/Actions');
 
-var LoginForm = React.createClass({
+var SignupForm = React.createClass({
 
     getInitialState: function() {
         return {
@@ -19,6 +19,7 @@ var LoginForm = React.createClass({
             waiting: false
         }
     },
+
     componentDidMount: function() {
         AppStore.addChangeListener(this._onChange);
     },
@@ -30,13 +31,13 @@ var LoginForm = React.createClass({
     _onChange: function() {
         this.setState({
             waiting: false,
-            error: AppStore.getLoginError()
+            error: AppStore.getSignupError()
         });
     },
 
     _handleSubmit: function(event) {
         event.preventDefault();
-        Actions.login(this.state.username, this.state.password);
+        Actions.signup(this.state.username, this.state.password);
         this.setState({waiting: true});
         // TODO set state "logging in..."
     },
@@ -85,7 +86,7 @@ var LoginForm = React.createClass({
             <Input
               type="text"
               value={this.state.username}
-              placeholder="Enter your login name"
+              placeholder="Choose a login name"
               label="Login"
               bsStyle={this._validationState()}
               hasFeedback
@@ -98,7 +99,7 @@ var LoginForm = React.createClass({
             <Input
               type="password"
               value={this.state.password}
-              placeholder="Enter your password"
+              placeholder="Choose a password"
               label="Password"
               bsStyle={this._validationState()}
               hasFeedback
@@ -111,7 +112,7 @@ var LoginForm = React.createClass({
             <Input
               disabled={!this._allowSubmit()}
               type="submit"
-              value="Login"
+              value="Sign up"
               className="col-xs-3 col-xs-offset-9"
               bsStyle="primary"
               bsSize="large" />
@@ -122,4 +123,4 @@ var LoginForm = React.createClass({
     }
 })
 
-module.exports = LoginForm;
+module.exports = SignupForm;

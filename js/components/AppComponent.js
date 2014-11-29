@@ -5,7 +5,7 @@ var Grid = bs.Grid;
 var Col = bs.Col;
 
 var AppStore = require('../stores/AppStore');
-var LoginForm = require('./LoginForm');
+var LoginAndSignup = require('./LoginAndSignup');
 
 var AppComponent = React.createClass({
 
@@ -31,7 +31,7 @@ var AppComponent = React.createClass({
     render: function() {
         var content = null;
         if (!this.state.user) {
-            content = <LoginForm/>;
+            content = <LoginAndSignup/>;
         }
         return (
             <Grid>
