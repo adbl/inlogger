@@ -7,3 +7,4 @@ RUN apt-get update && \
 ADD . /opt/inlogger
 VOLUME ["/opt/inlogger"]
 WORKDIR /opt/inlogger
+ENTRYPOINT ["python", "inlogger.py"]
