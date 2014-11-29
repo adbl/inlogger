@@ -9,6 +9,10 @@ RUN bash setup && \
     apt-get -y install nodejs && \
     npm install -g npm@2.1.10
 ADD . /opt/inlogger
-VOLUME ["/opt/inlogger"]
 WORKDIR /opt/inlogger
+RUN npm install
+RUN npm run build
+# TODO should use gulp or something
+RUN ln -s bundle.min.js static/bundle.js
+VOLUME ["/opt/inlogger"]
 ENTRYPOINT ["python", "inlogger.py"]
