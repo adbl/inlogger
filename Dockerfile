@@ -3,7 +3,8 @@ FROM ubuntu:12.04
 RUN apt-get update && \
     apt-get -y install python-pip && \
     pip install --upgrade pip==1.5.6 && \
-    `which pip` install Flask==0.10.1
+    `which pip` install Flask==0.10.1 && \
+    `which pip` install Flask-HTTPAuth==2.3.0
 ADD https://deb.nodesource.com/setup /
 RUN bash setup && \
     apt-get -y install nodejs && \

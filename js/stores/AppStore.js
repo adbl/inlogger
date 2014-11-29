@@ -11,8 +11,17 @@ var loginError = null;
 var signupSuccess = null;
 var signupError = null;
 
+function _setLoginSuccess(username, password) {
+    loginError = null;
+    user = {
+        username: username,
+        password: password
+    }
+}
+
 function _setLoginError(error) {
     loginError = error;
+    user = null;                // TODO really?
 }
 
 function _setSignupSuccess(login) {
@@ -26,6 +35,13 @@ function _setSignupError(error) {
 }
 
 var AppStore = assign({}, EventEmitter.prototype, {
+
+    getLogin: function() {
+        if (!user) {
+            return null;
+        }
+        return user.username;
+    },
 
     getLoginError: function() {
         return loginError;
@@ -57,6 +73,9 @@ AppDispatcher.register(function(payload) {
     switch(action.actionType) {
     case Constants.USER_LOGIN:
         _setLoginError(null);
+        break;
+    case Constants.USER_LOGIN_SUCCESS:
+        _setLoginSuccess(action.username, action.password);
         break;
     case Constants.USER_LOGIN_ERROR:
         _setLoginError(action.error);

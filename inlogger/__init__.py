@@ -1,11 +1,19 @@
 from flask import Flask, request, g
+from flask.ext.httpauth import HTTPBasicAuth
 import sqlite3
+from . import security
 from . import user
 
 DATABASE = '/mnt/db/inlogger.sqlite3'
 
 app = Flask(__name__, static_url_path='')
 app.config.from_object(__name__)
+auth = HTTPBasicAuth()
+
+
+@auth.verify_password
+def authenticate(username, password):
+    return security.authenticate(g.db, username, password)
 
 
 def connect_db():
@@ -30,6 +38,13 @@ def index():
     return app.send_static_file('index.html')
 
 
+@app.route('/api/login', methods=['POST'])
+@auth.login_required
+def login():
+    # TODO implementation
+    return "yey"
+
+
 @app.route('/api/signup', methods=['POST'])
 def signup():
     data = request.get_json()             # TODO handle json parse fail
@@ -37,6 +52,7 @@ def signup():
     password = data.get('password', '')
     result, reason = user.signup(g.db, username, password)
     if result:
+        # TODO not used..
         return respond("", 201, {'location': "/api/login/%s" % username})
     elif reason is user.USERNAME_TAKEN:
         return respond(user.USERNAME_TAKEN, 409)

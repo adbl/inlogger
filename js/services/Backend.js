@@ -1,7 +1,7 @@
 var ServerActions = require('../actions/ServerActions');
 
-function post(url, data, success, error) {
-    $.ajax({
+function post(url, data, success, error, options) {
+    $.ajax(_.extend({
         // timeout?
         type: "POST",
         url: url,
@@ -10,7 +10,7 @@ function post(url, data, success, error) {
         data: data,
         success: success,
         error: error
-    });
+    }, options ? options : {}));
 }
 
 var Backend = {
@@ -28,15 +28,23 @@ var Backend = {
     },
 
     login: function(username, password) {
-        post('/api/login', JSON.stringify({
+        post('/api/login', null, function(data, textStatus, jqXHR) {
+            debugger
+            ServerActions.loginSuccess(username, password)
+        }, function(jqXHR, textStatus, textError) {
+            var error = "unknown error";
+            if (textStatus == "error") {
+                if (textError == "UNAUTHORIZED") {
+                    error = "Incorrect login or password";
+                }
+                else {
+                    error = jqXHR.responseText;
+                }
+            }
+            ServerActions.loginError(error);
+        }, {
             username: username,
             password: password
-        }), function(data, textStatus, jqXHR) {
-            debugger
-            console.debug("server success");
-        }, function(jqXHR, textStatus, textError) {
-            ServerActions.loginError(
-                textStatus == "error" ? jqXHR.responseText : "unknown error");
         })
     }
 };

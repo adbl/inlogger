@@ -11,7 +11,7 @@ var AppComponent = React.createClass({
 
     getInitialState: function() {
         return {
-            user: null
+            login: null
         }
     },
 
@@ -24,13 +24,17 @@ var AppComponent = React.createClass({
     },
 
     _onChange: function() {
-        console.debug("AppComponent._onChange");
-        // TODO setState user...
+        this.setState({
+            login: AppStore.getLogin()
+        })
     },
 
     render: function() {
         var content = null;
-        if (!this.state.user) {
+        if (this.state.login) {
+            content = <p>Welcome <strong>{this.state.login}</strong>!</p>;
+        }
+        else {
             content = <LoginAndSignup/>;
         }
         return (

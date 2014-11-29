@@ -24,10 +24,11 @@ var ServerActions = {
         })
     },
 
-    loginSuccess: function(user) {
+    loginSuccess: function(username, password) {
         AppDispatcher.handleServerAction({
             actionType: Constants.USER_LOGIN_SUCCESS,
-            user: user
+            username: username,
+            password: password
         })
     }
 
