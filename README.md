@@ -1,12 +1,12 @@
-== InLogger ==
+# InLogger
 
-=== Building ===
+## Building
 
 `make`
 
-Requirements: Docker 1.X (+compatible kernel)
+Requirements: Docker 1.2 (+compatible kernel)
 
 
-=== Running ===
+## Running
 
 `docker run -p 80:5000 inlogger`
