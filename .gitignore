@@ -1,4 +1,5 @@
 inlogger/static/bundle.js
 inlogger/static/bundle.min.js
+inlogger/*.pyc
 node_modules/
 db/inlogger.sqlite3

@@ -14,3 +14,4 @@ clean:
 	-rm inlogger/static/bundle.js
 	-rm inlogger/static/bundle.min.js
 	-rm -r node_modules
+	-rm inlogger/*.pyc
