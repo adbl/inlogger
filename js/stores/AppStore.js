@@ -84,6 +84,7 @@ AppDispatcher.register(function(payload) {
         break;
     case Constants.USER_SIGNUP:
         _setSignupError(null);
+        _setLoginError(null);
         break;
     case Constants.USER_SIGNUP_SUCCESS:
         _setSignupSuccess(action.login);
