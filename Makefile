@@ -2,7 +2,7 @@ image := inlogger
 
 .PHONY: image clean db
 
-image: db
+image: db/inlogger.sqlite3
 	docker build --rm -t $(image) .
 
 db: db/inlogger.sqlite3
