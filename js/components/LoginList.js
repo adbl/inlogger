@@ -1,6 +1,7 @@
 var React = require('react');
 var bs = require('react-bootstrap');
 var Alert = bs.Alert;
+var Table = bs.Table;
 
 var LoginStore = require('../stores/LoginStore');
 var Actions = require('../actions/Actions');
@@ -42,10 +43,30 @@ var LoginList = React.createClass({
         }
         else {
             var items = _.map(this.state.logins, function(item) {
-               return <p key={item.id}>{item.timestamp.format()}</p>
-            })
+               return (
+                   <tr key={item.id}>
+                     <td>{item.timestamp.format("dddd MMMM DD, YYYY")}</td>
+                     <td>{item.timestamp.format("HH:mm:ss")}</td>
+                     <td>{item.timestamp.fromNow()}</td>
+                   </tr>
+               )
+            });
             return (
-                    <div>{items}</div>
+              <div>
+                <p>Here are your most recent logins.</p>
+                <Table striped condensed hover>
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {items}
+                  </tbody>
+                </Table>
+              </div>
             )
         }
     }
