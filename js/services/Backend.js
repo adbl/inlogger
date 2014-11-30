@@ -1,4 +1,5 @@
 var ServerActions = require('../actions/ServerActions');
+var Session = require('./Session');
 
 function get(url, success, error, options) {
     $.ajax(_.extend({
@@ -38,7 +39,8 @@ var Backend = {
 
     login: function(username, password) {
         post('/api/login', null, function(data, textStatus, jqXHR) {
-            ServerActions.loginSuccess(username, password)
+            Session.create(username, password);
+            ServerActions.authenticated(username, password);
         }, function(jqXHR, textStatus, textError) {
             var error = "unknown error";
             if (textStatus == "error") {

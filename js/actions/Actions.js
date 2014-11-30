@@ -3,8 +3,17 @@ var Constants = require('../constants/Constants');
 var AppStore = require('../stores/AppStore');
 
 var Backend = require('../services/Backend');
+var Session = require('../services/Session');
 
 var Actions = {
+
+    loadSession: function() {
+        Session.load()
+    },
+
+    clearSession: function() {
+        Session.clear();
+    },
 
     login: function(username, password) {
         AppDispatcher.handleViewAction({

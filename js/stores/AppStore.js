@@ -6,17 +6,19 @@ var Constants = require('../constants/Constants');
 
 var CHANGE_EVENT = 'change';
 
-var user = null;
+var _auth = null;
+var _login = null;
 var loginError = null;
 var signupSuccess = null;
 var signupError = null;
 
-function _setLoginSuccess(username, password) {
+function _setAuth(auth) {
+    _auth = auth;
+}
+
+function _setLogin(login) {
     loginError = null;
-    user = {
-        username: username,
-        password: password
-    }
+    _login = login;
 }
 
 function _setLoginError(error) {
@@ -37,14 +39,11 @@ function _setSignupError(error) {
 var AppStore = assign({}, EventEmitter.prototype, {
 
     getAuth: function() {
-        return user;
+        return _auth;
     },
 
     getLoginName: function() {
-        if (!user) {
-            return null;
-        }
-        return user.username;
+        return _login;
     },
 
     getLoginError: function() {
@@ -75,11 +74,9 @@ var AppStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(payload) {
     var action = payload.action;
     switch(action.actionType) {
-    case Constants.USER_LOGIN:
-        _setLoginError(null);
-        break;
-    case Constants.USER_LOGIN_SUCCESS:
-        _setLoginSuccess(action.username, action.password);
+    case Constants.AUTHENTICATED:
+        _setAuth(action.auth);
+        _setLogin(action.login);
         break;
     case Constants.USER_LOGIN_ERROR:
         _setLoginError(action.error);

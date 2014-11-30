@@ -5,6 +5,7 @@ var Grid = bs.Grid;
 var Col = bs.Col;
 
 var AppStore = require('../stores/AppStore');
+var Actions = require('../actions/Actions');
 var LoginAndSignup = require('./LoginAndSignup');
 var LoginList = require('./LoginList');
 
@@ -18,6 +19,7 @@ var AppComponent = React.createClass({
 
     componentDidMount: function() {
         AppStore.addChangeListener(this._onChange);
+        Actions.loadSession();
     },
 
     componentWillUnmount: function() {

@@ -17,18 +17,21 @@ var ServerActions = {
         })
     },
 
+    authenticated: function(username, password) {
+        AppDispatcher.handleServerAction({
+            actionType: Constants.AUTHENTICATED,
+            login: username,
+            auth: {
+                username: username,
+                password: password
+            }
+        })
+    },
+
     loginError: function(error) {
         AppDispatcher.handleServerAction({
             actionType: Constants.USER_LOGIN_ERROR,
             error: error
-        })
-    },
-
-    loginSuccess: function(username, password) {
-        AppDispatcher.handleServerAction({
-            actionType: Constants.USER_LOGIN_SUCCESS,
-            username: username,
-            password: password
         })
     },
 
