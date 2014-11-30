@@ -79,7 +79,7 @@ var Backend = {
             function(data, textStatus, jqXHR) {
                 ServerActions.listLoginsSuccess(data)
             }, function(jqXHR, textStatus, textError) {
-                ServerActions.listLoginsError("unknown error")
+                ServerActions.listLoginsError(true)
             })
     }
 };

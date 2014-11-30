@@ -36,8 +36,8 @@ var LoginList = React.createClass({
         if (this.state.error) {
             return (
               <Alert bsStyle="danger">
-                <strong>Sorry!</strong> couldn't load your
-                logins, {this.state.error}.
+                <strong>Sorry!</strong> An error occured when loading your list
+                of logins.
               </Alert>
             )
         }

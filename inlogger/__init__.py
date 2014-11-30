@@ -49,10 +49,9 @@ def login():
 @app.route('/api/login/<username>', methods=['GET'])
 @auth.login_required
 def list(username):
-    # TODO FIX
-    # if not username is auth.username():
-    #     return respond("", 404)
-    logins = user.list_logins(g.db, auth.username())
+    if not username == auth.username():
+        return respond("", 404)
+    logins = user.list_logins(g.db, username)
     return respond(
         {'logins': [_format_login(login) for login in logins]}, 200)
 

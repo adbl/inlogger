@@ -44,7 +44,7 @@ var ServerActions = {
 
     listLoginsError: function(error) {
         AppDispatcher.handleServerAction({
-            actionType: Constants.LIST_LOGINS_ERROR,
+            actionType: Constants.GET_LOGINS_ERROR,
             error: error
         })
     }
