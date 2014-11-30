@@ -1,5 +1,14 @@
 var ServerActions = require('../actions/ServerActions');
 
+function get(url, success, error, options) {
+    $.ajax(_.extend({
+        type: "GET",
+        url: url,
+        success: success,
+        error: error
+    }, options ? options : {}));
+}
+
 function post(url, data, success, error, options) {
     $.ajax(_.extend({
         // timeout?
@@ -29,7 +38,6 @@ var Backend = {
 
     login: function(username, password) {
         post('/api/login', null, function(data, textStatus, jqXHR) {
-            debugger
             ServerActions.loginSuccess(username, password)
         }, function(jqXHR, textStatus, textError) {
             var error = "unknown error";
@@ -45,6 +53,18 @@ var Backend = {
         }, {
             username: username,
             password: password
+        })
+    },
+
+    listLogins: function(auth) {
+        // TODO detect unauthorized and logout?
+        get('/api/login/' + auth.username, function(data, textStatus, jqXHR) {
+            ServerActions.listLoginsSuccess(data)
+        }, function(jqXHR, textStatus, textError) {
+            ServerActions.listLoginsError("unknown error")
+        }, {
+            username: auth.username,
+            password: auth.password
         })
     }
 };

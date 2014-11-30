@@ -6,6 +6,7 @@ var Col = bs.Col;
 
 var AppStore = require('../stores/AppStore');
 var LoginAndSignup = require('./LoginAndSignup');
+var LoginList = require('./LoginList');
 
 var AppComponent = React.createClass({
 
@@ -25,14 +26,19 @@ var AppComponent = React.createClass({
 
     _onChange: function() {
         this.setState({
-            login: AppStore.getLogin()
+            login: AppStore.getLoginName()
         })
     },
 
     render: function() {
         var content = null;
         if (this.state.login) {
-            content = <p>Welcome <strong>{this.state.login}</strong>!</p>;
+            content = (
+                <div>
+                  <p>Welcome <strong>{this.state.login}</strong>!</p>
+                  <LoginList/>
+                </div>
+            );
         }
         else {
             content = <LoginAndSignup/>;

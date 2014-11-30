@@ -1,4 +1,4 @@
-from flask import Flask, request, g
+from flask import Flask, request, g, json
 from flask.ext.httpauth import HTTPBasicAuth
 import sqlite3
 from . import security
@@ -18,7 +18,8 @@ def authenticate(username, password):
 
 def connect_db():
     # TODO make sure db is actually present
-    return sqlite3.connect(app.config['DATABASE'])
+    return sqlite3.connect(app.config['DATABASE'],
+                           detect_types=sqlite3.PARSE_DECLTYPES)
 
 
 @app.before_request
@@ -45,6 +46,24 @@ def login():
     return respond("", 200)
 
 
+@app.route('/api/login/<username>', methods=['GET'])
+@auth.login_required
+def list(username):
+    # TODO FIX
+    # if not username is auth.username():
+    #     return respond("", 404)
+    logins = user.list_logins(g.db, auth.username())
+    return respond(
+        {'logins': [_format_login(login) for login in logins]}, 200)
+
+
+def _format_login(login):
+    return {
+        'id': login['id'],
+        'timestamp': "%sZ" % login['datetime'].isoformat()
+    }
+
+
 @app.route('/api/signup', methods=['POST'])
 def signup():
     data = request.get_json()             # TODO handle json parse fail
@@ -65,4 +84,7 @@ def respond(data, code, headers=None):
         headers = {}
     if isinstance(data, basestring):
         headers['content-type'] = 'text/plain'
+    elif isinstance(data, dict):
+        headers['content-type'] = 'application/json'
+        data = json.dumps(data)
     return data, code, headers

@@ -30,6 +30,20 @@ var ServerActions = {
             username: username,
             password: password
         })
+    },
+
+    listLoginsSuccess: function(data) {
+        AppDispatcher.handleServerAction({
+            actionType: Constants.GET_LOGINS_SUCCESS,
+            data: data
+        })
+    },
+
+    listLoginsError: function(error) {
+        AppDispatcher.handleServerAction({
+            actionType: Constants.LIST_LOGINS_ERROR,
+            error: error
+        })
     }
 
 };

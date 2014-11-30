@@ -19,3 +19,9 @@ def login(db, username):
     c.execute('INSERT INTO logins (user_id) VALUES (?)', [username])
     db.commit()
     return True
+
+
+def list_logins(db, username):
+    c = db.cursor()
+    return [dict(id=row[0], datetime=row[1]) for row in c.execute(
+        'SELECT id, datetime FROM logins WHERE user_id=?', [username])]

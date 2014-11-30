@@ -21,7 +21,7 @@ function _setLoginSuccess(username, password) {
 
 function _setLoginError(error) {
     loginError = error;
-    user = null;                // TODO really?
+    user = null;
 }
 
 function _setSignupSuccess(login) {
@@ -36,7 +36,11 @@ function _setSignupError(error) {
 
 var AppStore = assign({}, EventEmitter.prototype, {
 
-    getLogin: function() {
+    getAuth: function() {
+        return user;
+    },
+
+    getLoginName: function() {
         if (!user) {
             return null;
         }
@@ -93,7 +97,7 @@ AppDispatcher.register(function(payload) {
         return true;
     }
 
-    // All events trigger UI changes
+    // All events trigger UI changes, except LIST_LOGINS_*
     AppStore.emitChange();
     return true;
 });
