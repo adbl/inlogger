@@ -23,7 +23,8 @@ function _setLogin(login) {
 
 function _setLoginError(error) {
     loginError = error;
-    user = null;
+    _auth = null;
+    _login = null;
 }
 
 function _setSignupSuccess(login) {

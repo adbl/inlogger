@@ -15,7 +15,7 @@ var LoginForm = React.createClass({
         return {
             username: "",
             password: "",
-            error: null,
+            error: AppStore.getLoginError(),
             waiting: false
         }
     },

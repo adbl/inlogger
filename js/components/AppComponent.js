@@ -13,7 +13,7 @@ var AppComponent = React.createClass({
 
     getInitialState: function() {
         return {
-            login: null
+            login: AppStore.getLoginName()
         }
     },
 
@@ -27,9 +27,7 @@ var AppComponent = React.createClass({
     },
 
     _onChange: function() {
-        this.setState({
-            login: AppStore.getLoginName()
-        })
+        this.setState(this.getInitialState());
     },
 
     _handleLogout: function(event) {

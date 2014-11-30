@@ -1,12 +1,29 @@
 var ServerActions = require('../actions/ServerActions');
 var Session = require('./Session');
 
-function get(url, success, error, options) {
+function isUnauthorized(textStatus, textError) {
+    return textStatus == "error" &&
+        textError == "UNAUTHORIZED";
+}
+
+function get(url, auth, success, error, options) {
+    errorUnauthorized = function(jqXHR, textStatus, textError) {
+        if (isUnauthorized(textStatus, textError)) {
+            Session.clear();
+            ServerActions.loginError("Your authentication is no longer valid.");
+        }
+        else {
+            error(jqXHR, textStatus, textError);
+        }
+    };
+
     $.ajax(_.extend({
         type: "GET",
         url: url,
+        username: auth.username,
+        password: auth.password,
         success: success,
-        error: error
+        error: errorUnauthorized
     }, options ? options : {}));
 }
 
@@ -43,13 +60,11 @@ var Backend = {
             ServerActions.authenticated(username, password);
         }, function(jqXHR, textStatus, textError) {
             var error = "unknown error";
-            if (textStatus == "error") {
-                if (textError == "UNAUTHORIZED") {
+            if (isUnauthorized(textStatus, textError)) {
                     error = "Incorrect login or password";
-                }
-                else {
-                    error = jqXHR.responseText;
-                }
+            }
+            else if (textStatus == "error") {
+                error = jqXHR.responseText;
             }
             ServerActions.loginError(error);
         }, {
@@ -60,14 +75,12 @@ var Backend = {
 
     listLogins: function(auth) {
         // TODO detect unauthorized and logout?
-        get('/api/login/' + auth.username, function(data, textStatus, jqXHR) {
-            ServerActions.listLoginsSuccess(data)
-        }, function(jqXHR, textStatus, textError) {
-            ServerActions.listLoginsError("unknown error")
-        }, {
-            username: auth.username,
-            password: auth.password
-        })
+        get('/api/login/' + auth.username, auth,
+            function(data, textStatus, jqXHR) {
+                ServerActions.listLoginsSuccess(data)
+            }, function(jqXHR, textStatus, textError) {
+                ServerActions.listLoginsError("unknown error")
+            })
     }
 };
 
