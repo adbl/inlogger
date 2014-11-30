@@ -53,7 +53,7 @@ var LoginList = React.createClass({
             });
             return (
               <div>
-                <p>Here are your most recent logins.</p>
+                <p>Here are your most recent logins:</p>
                 <Table striped condensed hover>
                   <thead>
                     <tr>

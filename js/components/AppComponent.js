@@ -32,14 +32,22 @@ var AppComponent = React.createClass({
         })
     },
 
+    _handleLogout: function(event) {
+        Actions.clearSession();
+    },
+
     render: function() {
         var content = null;
+        var logout = null;
         if (this.state.login) {
             content = (
                 <div>
                   <p>Welcome <strong>{this.state.login}</strong>!</p>
                   <LoginList/>
                 </div>
+            );
+            logout = (
+                <a href="/" onClick={this._handleLogout}>Log out</a>
             );
         }
         else {
@@ -48,7 +56,10 @@ var AppComponent = React.createClass({
         return (
             <Grid>
               <Col xs={10} xsOffset={1} sm={8} smOffset={2}>
-                <PageHeader>InLogger <small>...</small></PageHeader>
+                <PageHeader>
+                    InLogger
+                    <small className="pull-right">{logout}</small>
+                </PageHeader>
               </Col>
               <Col xs={10} xsOffset={1} sm={8} smOffset={2}>
                 {content}
