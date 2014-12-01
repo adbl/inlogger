@@ -12,3 +12,8 @@ Requirements:
 ## Running
 
 `docker run -p 80:5000 -v ${PWD}/db:/mnt/db inlogger`
+
+
+## Developing
+
+`docker run -p 80:5000 -v ${PWD}/db:/mnt/db -v ${PWD}:/opt/inlogger inlogger`
